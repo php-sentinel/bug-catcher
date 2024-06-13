@@ -23,6 +23,22 @@ cp vendor/php-sentinel/bug-catcher-bundle/config/doctrine/* config/doctrine/BugC
         <!--...-->
 ```
 
+Configure orm
+
+```yaml
+# config/packages/doctrine.yaml
+doctrine:
+    #...
+    orm:
+        #...
+        mappings:
+            BugCatcherBundle:
+                type: xml
+                dir: '%kernel.project_dir%/config/doctrine/BugCatcherBundle/'
+                prefix: 'PhpSentinel\BugCatcher\Entity'
+                alias: PhpSentinelBundle
+```
+
 Now you can create twig component ```MyRecord``` for rendering log row in dashboard. and configure it in services.yaml
 
 ```yaml
