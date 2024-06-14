@@ -16,9 +16,6 @@
         <field name="email" type="string" length="180" unique="true"/>
 
         <field name="roles" type="simple_array" nullable="true">
-            <options>
-                <option name="default">[]</option>
-            </options>
         </field>
 
         <field name="password" type="string" nullable="false"/>
@@ -30,10 +27,10 @@
         <many-to-many field="projects" target-entity="PhpSentinel\BugCatcher\Entity\Project" inversed-by="users">
             <join-table name="user_project">
                 <join-columns>
-                    <join-column name="user_id" referenced-column-name="id"/>
+                    <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="project_id" referenced-column-name="id"/>
+                    <join-column name="project_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </inverse-join-columns>
             </join-table>
         </many-to-many>

@@ -22,23 +22,12 @@
 
 
         <field name="name" type="string" length="255" nullable="false">
-            <options>
-                <option name="not_blank">true</option>
-                <option name="length_min">3</option>
-                <option name="length_max">255</option>
-            </options>
         </field>
 
         <field name="minimalImportance" type="string" length="255" enum-type="PhpSentinel\BugCatcher\Enum\Importance">
-            <options>
-                <option name="default">Medium</option>
-            </options>
         </field>
 
         <field name="delay" type="string" length="255" enum-type="PhpSentinel\BugCatcher\Enum\NotifyRepeat">
-            <options>
-                <option name="default">None</option>
-            </options>
         </field>
 
         <field name="delayInterval" type="integer" nullable="true"/>
@@ -48,17 +37,11 @@
         <field name="failedStatusCount" type="integer" nullable="false"/>
 
         <field name="repeat" type="string" length="255" enum-type="PhpSentinel\BugCatcher\Enum\NotifyRepeat">
-            <options>
-                <option name="default">FrequencyRecords</option>
-            </options>
         </field>
 
         <field name="repeatInterval" type="integer" nullable="true"/>
 
         <field name="clearAt" type="string" length="255" enum-type="PhpSentinel\BugCatcher\Enum\NotifyRepeat">
-            <options>
-                <option name="default">FrequencyRecords</option>
-            </options>
         </field>
 
         <field name="repeatAtSkipped" type="integer" nullable="true"/>
@@ -75,10 +58,10 @@
         <many-to-many field="projects" target-entity="PhpSentinel\BugCatcher\Entity\Project" inversed-by="project">
             <join-table name="notifier_project">
                 <join-columns>
-                    <join-column name="notifier_id" referenced-column-name="id"/>
+                    <join-column name="notifier_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="project_id" referenced-column-name="id"/>
+                    <join-column name="project_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </inverse-join-columns>
             </join-table>
         </many-to-many>

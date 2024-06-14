@@ -6,24 +6,42 @@ Just create class ```App\Entity\MyRecord``` extends ```PhpSentinel\BugCatcher\En
 When you have custom class you need registered it to discriminator map.
 This is little bit tricky, because you need override all ORM mappings.
 
+### Copy ORM files
+
+**Windows**
+
+In windows you need copy orm files to your project and edit it.
+Be careful when tou update bug-catcher package, you need copy all this files again and merge your file.
+Remember, some files can be added or edited in new version.
+
 ```
 mkdir config/doctrine/BugCatcherBudnle
-cp vendor/php-sentinel/bug-catcher-bundle/config/doctrine/* config/doctrine/BugCatcherBudnle
+cp vendor/php-sentinel/bug-catcher/config/doctrine/* config/doctrine/BugCatcherBudnle
 ```
 
+**Linux**
+
+In linux you can create symbolic links to original files and override only one file.
+So you can update bug-catcher package without any changes in your project except one file that you edited.
+
+But you need copy simlinks again sometimes after composer update because some files can be added in new version.
+```
+mkdir config/doctrine/BugCatcherBudnle
+find ./vendor/php-sentinel/bug-catcher/config/doctrine/ -name '*.xml' -exec bash -c 'ln -rs "$0" ./config/doctrine/BugCatcherBundle/' {} \;
+rm config/doctrine/BugCatcherBundle/Record.orm.xml
+cp vendor/php-sentinel/bug-catcher/config/doctrine/Record.orm.xml config/doctrine/BugCatcherBundle/Record.orm.xml
+```
+
+### Configure ORM
 ```xml
 <!--config/doctrine/BugCatcherBudnle/Record.orm.xml-->
 <!--...-->
 <discriminator-map>
-    <discriminator-mapping value="log" class="PhpSentinel\BugCatcher\Entity\RecordLog"/>
-    <discriminator-mapping value="trace-log" class="PhpSentinel\BugCatcher\Entity\RecordLogTrace"/>
-    <discriminator-mapping value="ping" class="PhpSentinel\BugCatcher\Entity\RecordPing"/>
+    <!--...-->
     <discriminator-mapping value="my-record" class="App\Entity\MyRecord"/>
 </discriminator-map>
-        <!--...-->
+<!--...-->
 ```
-
-Configure orm
 
 ```yaml
 # config/packages/doctrine.yaml
@@ -39,6 +57,13 @@ doctrine:
                 alias: PhpSentinelBundle
 ```
 
+**Enable Api**
+
+You need enable api plaform for your custom entity. See [Api Platform documentation](https://api-platform.com/docs/core/getting-started/) for more
+details.
+You can inspire in entity [PhpSentinel\BugCatcher\Entity\RecordLog](../src/Entity/RecordLog.php) for more details.
+
+### Register Record Item
 Now you can create twig component ```MyRecord``` for rendering log row in dashboard. and configure it in services.yaml
 
 ```yaml

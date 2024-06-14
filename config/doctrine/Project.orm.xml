@@ -29,10 +29,10 @@
         <many-to-many field="users" target-entity="PhpSentinel\BugCatcher\Entity\User" mapped-by="projects">
             <join-table name="user_project">
                 <join-columns>
-                    <join-column name="project_id" referenced-column-name="id"/>
+                    <join-column name="project_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="user_id" referenced-column-name="id"/>
+                    <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
@@ -40,10 +40,10 @@
         <many-to-many field="notifiers" target-entity="PhpSentinel\BugCatcher\Entity\Notifier" mapped-by="projects">
             <join-table name="notifier_project">
                 <join-columns>
-                    <join-column name="project_id" referenced-column-name="id"/>
+                    <join-column name="project_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="notifier_id" referenced-column-name="id"/>
+                    <join-column name="notifier_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
